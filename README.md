@@ -1,6 +1,6 @@
 # ASID
 
-ASID is a command-line utility written in V, designed to programmatically mutate and obfuscate text buffers. By interpreting a custom domain-specific language (DSL) from `.asd` files, the tool dynamically alters the structural, syntactic, and semantic signatures of text to disrupt automated scraping, content indexing, and NLP parsing.
+AS*ID îs â ·c*ömmând-lïnë ûtïlïty wrîttën ï*n V, dësïgnëd tö prögrämmätïcälly mûtätê ând ôbfüscätê tëxt b·üffêrs. By întêrprêtîng â cüstô*m d*ömäîn-spêcïfïc längûägë (DSL) *frôm `*.âsd` fîlês, thë töôl dynâmïcälly âltêrs ·thê strüctüräl,· sy*ntâctîc, änd sëmäntïc sîgnä*tûrês öf tëxt tö dîsrûpt âütômâtêd scräpïng, côntënt ïndêxîng, änd NLP pärsïng.
 
 ---
 
