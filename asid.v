@@ -4,17 +4,15 @@ import os
 import term
 import crypto.sha3
 
-const (
-	zw_characters = ['\u200B', '\u200C', '\u200D', '\u2060']
-	homoglyphs    = {
-		'a': 'а'
-		'c': 'с'
-		'e': 'е'
-		'o': 'о'
-		'p': 'р'
-		'y': 'у'
-	}
-)
+const zw_characters = ['\u200B', '\u200C', '\u200D', '\u2060']
+const homoglyphs = {
+	'a': 'а'
+	'c': 'с'
+	'e': 'е'
+	'o': 'о'
+	'p': 'р'
+	'y': 'у'
+}
 
 struct SecurePRNG {
 mut:
@@ -28,19 +26,19 @@ struct LoopState {
 	start_ip int
 	count    int
 mut:
-	current  int
+	current int
 }
 
 struct AsdInterpreter {
 mut:
-	lines       []string
-	ip          int
-	variables   map[string]string
-	buffer      string
-	prng        SecurePRNG
-	loop_stack  []LoopState
-	if_stack    []bool
-	skip_depth  int
+	lines      []string
+	ip         int
+	variables  map[string]string
+	buffer     string
+	prng       SecurePRNG
+	loop_stack []LoopState
+	if_stack   []bool
+	skip_depth int
 }
 
 fn (mut rng SecurePRNG) next_u8() u8 {
@@ -88,10 +86,10 @@ fn (mut rng SecurePRNG) intn(n int) int {
 fn new_secure_prng_from_string(seed_str string) SecurePRNG {
 	hashed := sha3.sum512(seed_str.bytes())
 	return SecurePRNG{
-		seed: hashed.clone()
+		seed:    hashed.clone()
 		counter: 0
-		buffer: []u8{}
-		idx: 0
+		buffer:  []u8{}
+		idx:     0
 	}
 }
 
@@ -264,8 +262,8 @@ fn (mut inter AsdInterpreter) execute() ! {
 				}
 				inter.loop_stack << LoopState{
 					start_ip: inter.ip
-					count: count
-					current: 0
+					count:    count
+					current:  0
 				}
 			}
 			'endloop' {
@@ -327,9 +325,10 @@ fn (mut inter AsdInterpreter) execute() ! {
 				return error('Line ${inter.ip + 1}: Unknown command "${op}".')
 			}
 		}
+
 		inter.ip++
 	}
-	
+
 	if inter.loop_stack.len > 0 {
 		return error('Syntax Error: Missing "endloop" for a loop block.')
 	}
@@ -419,18 +418,16 @@ fn run() ! {
 		}
 	}
 
-	lines := os.read_lines(script_path) or {
-		return error('Failed to read script file: ${err}')
-	}
+	lines := os.read_lines(script_path) or { return error('Failed to read script file: ${err}') }
 
 	mut inter := AsdInterpreter{
-		lines: lines
-		ip: 0
-		variables: map[string]string{}
-		buffer: final_input
-		prng: new_secure_prng_from_string(seed_val)
+		lines:      lines
+		ip:         0
+		variables:  map[string]string{}
+		buffer:     final_input
+		prng:       new_secure_prng_from_string(seed_val)
 		loop_stack: []LoopState{}
-		if_stack: []bool{}
+		if_stack:   []bool{}
 		skip_depth: 0
 	}
 
